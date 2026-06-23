@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucciano's Inventory Manager</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="estilos.css">
+
+    <!-- Axios (OBLIGATORIO SEGÚN CONSIGNA) -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+    <!-- =====================================================
+        HEADER
+    ====================================================== -->
+
+    <header class="header">
+        <div class="header-container">
+            <h1>Lucciano's Inventory Manager</h1>
+            <p>Sistema de Gestión de Inventario</p>
+        </div>
+    </header>
+
+    <!-- =====================================================
+        CONTENEDOR PRINCIPAL
+    ====================================================== -->
+
+    <main class="container">
+
+        <!-- =====================================================
+            DASHBOARD
+        ====================================================== -->
+
+        <section class="dashboard">
+
+            <div class="dashboard-card">
+                <h3 id="totalProductos">0</h3>
+                <p>Productos</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3 id="totalCategorias">0</h3>
+                <p>Categorías</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3 id="totalStock">0</h3>
+                <p>Stock Total</p>
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+            CRUD CATEGORÍAS
+        ====================================================== -->
+
+        <section class="card">
+
+            <div class="section-header">
+                <h2>Gestión de Categorías</h2>
+            </div>
+
+            <form id="formCategoria" class="form-grid">
+
+                <input
+                    type="text"
+                    id="categoriaNombre"
+                    placeholder="Nombre de la categoría"
+                    required>
+
+                <input
+                    type="text"
+                    id="categoriaDescripcion"
+                    placeholder="Descripción"
+                    required>
+
+                <button type="submit" class="btn-primary">
+                    Crear Categoría
+                </button>
+
+            </form>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaCategorias">
+                        <!-- JS -->
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+            CRUD PRODUCTOS
+        ====================================================== -->
+
+        <section class="card">
+
+            <div class="section-header">
+                <h2>Gestión de Productos</h2>
+            </div>
+
+            <form id="formProducto" class="form-grid">
+
+                <input
+                    type="text"
+                    id="productoNombre"
+                    placeholder="Nombre del producto"
+                    required>
+
+                <input
+                    type="number"
+                    id="productoPrecio"
+                    placeholder="Precio"
+                    min="1"
+                    required>
+
+                <input
+                    type="number"
+                    id="productoStock"
+                    placeholder="Stock inicial"
+                    min="0"
+                    required>
+
+                <select id="productoCategoria" required>
+                    <option value="">
+                        Seleccione categoría
+                    </option>
+                </select>
+
+                <button type="submit" class="btn-primary">
+                    Crear Producto
+                </button>
+
+            </form>
+
+            <!-- FILTRO OBLIGATORIO -->
+
+            <div class="filtro-container">
+
+                <select id="filtroCategoria">
+
+                    <option value="">
+                        Todas las categorías
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Categoría</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablaProductos">
+                        <!-- JS -->
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+            CRUD MOVIMIENTOS
+        ====================================================== -->
+
+        <section class="card">
+
+            <div class="section-header">
+                <h2>Movimientos de Stock</h2>
+            </div>
+
+            <form id="formMovimiento" class="form-grid">
+
+                <select id="movimientoProducto" required>
+
+                    <option value="">
+                        Seleccionar producto
+                    </option>
+
+                </select>
+
+                <select id="movimientoTipo" required>
+
+                    <option value="entrada">
+                        Entrada
+                    </option>
+
+                    <option value="salida">
+                        Salida
+                    </option>
+
+                </select>
+
+                <input
+                    type="number"
+                    id="movimientoCantidad"
+                    min="1"
+                    placeholder="Cantidad"
+                    required>
+
+                <input
+                    type="date"
+                    id="movimientoFecha"
+                    required>
+
+                <button type="submit" class="btn-primary">
+                    Registrar Movimiento
+                </button>
+
+            </form>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Cantidad</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablaMovimientos">
+                        <!-- JS -->
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+            HISTORIAL POR PRODUCTO
+        ====================================================== -->
+
+        <section class="card">
+
+            <div class="section-header">
+                <h2>Historial de Movimientos</h2>
+            </div>
+
+            <select id="historialProducto">
+
+                <option value="">
+                    Seleccione un producto
+                </option>
+
+            </select>
+
+            <div id="historialMovimientos" class="historial-container">
+
+                <p class="empty-message">
+                    Seleccione un producto para ver su historial.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- =====================================================
+        MODAL EDICIÓN PRODUCTO
+    ====================================================== -->
+
+    <div class="modal" id="modalProducto">
+
+        <div class="modal-content">
+
+            <h2>Editar Producto</h2>
+
+            <form id="formEditarProducto">
+
+                <input type="hidden" id="editProductoId">
+
+                <input
+                    type="text"
+                    id="editProductoNombre"
+                    required>
+
+                <input
+                    type="number"
+                    id="editProductoPrecio"
+                    required>
+
+                <select id="editProductoCategoria" required>
+                </select>
+
+                <div class="modal-buttons">
+
+                    <button
+                        type="submit"
+                        class="btn-primary">
+
+                        Guardar
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cerrarModalProducto"
+                        class="btn-danger">
+
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+        MODAL EDICIÓN CATEGORÍA
+    ====================================================== -->
+
+    <div class="modal" id="modalCategoria">
+
+        <div class="modal-content">
+
+            <h2>Editar Categoría</h2>
+
+            <form id="formEditarCategoria">
+
+                <input
+                    type="hidden"
+                    id="editCategoriaId">
+
+                <input
+                    type="text"
+                    id="editCategoriaNombre"
+                    required>
+
+                <textarea
+                    id="editCategoriaDescripcion"
+                    required></textarea>
+
+                <div class="modal-buttons">
+
+                    <button
+                        type="submit"
+                        class="btn-primary">
+
+                        Guardar
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cerrarModalCategoria"
+                        class="btn-danger">
+
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+        MODAL EDICIÓN MOVIMIENTO
+    ====================================================== -->
+
+    <div class="modal" id="modalMovimiento">
+
+        <div class="modal-content">
+
+            <h2>Editar Movimiento</h2>
+
+            <form id="formEditarMovimiento">
+
+                <input
+                    type="hidden"
+                    id="editMovimientoId">
+
+                <select
+                    id="editMovimientoTipo"
+                    required>
+
+                    <option value="entrada">
+                        Entrada
+                    </option>
+
+                    <option value="salida">
+                        Salida
+                    </option>
+
+                </select>
+
+                <input
+                    type="number"
+                    id="editMovimientoCantidad"
+                    min="1"
+                    required>
+
+                <div class="modal-buttons">
+
+                    <button
+                        type="submit"
+                        class="btn-primary">
+
+                        Guardar
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cerrarModalMovimiento"
+                        class="btn-danger">
+
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="app.js"></script>
+
+</body>
+
+</html>
