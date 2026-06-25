@@ -109,22 +109,43 @@ async function crearCategoria(nombre, descripcion) {
 
 async function eliminarCategoria(id) {
 
-    const tieneProductos =
-        productos.some(
+    const productosRelacionados =
+        productos.filter(
             p => Number(p.categoriaId) === Number(id)
         );
 
-    if (tieneProductos) {
+    if (productosRelacionados.length) {
 
-        alert(
-            "No se puede eliminar. Tiene productos asociados."
-        );
+        if (!confirm(
+            "Esta categoría tiene productos asociados. " +
+            "¿Eliminar categoría, productos y movimientos relacionados?"
+        ))
+            return;
 
-        return;
+        for (const producto of productosRelacionados) {
+
+            const movimientosRelacionados =
+                movimientos.filter(
+                    m => Number(m.productoId) === Number(producto.id)
+                );
+
+            for (const mov of movimientosRelacionados) {
+
+                await axios.delete(
+                    `${API_URL}/movimientos/${mov.id}`
+                );
+            }
+
+            await axios.delete(
+                `${API_URL}/productos/${producto.id}`
+            );
+        }
+
+    } else {
+
+        if (!confirm("¿Eliminar categoría?"))
+            return;
     }
-
-    if (!confirm("¿Eliminar categoría?"))
-        return;
 
     await axios.delete(`${API_URL}/categorias/${id}`);
 
@@ -297,49 +318,23 @@ function renderProductos(lista = productos) {
                 </span>
             </td>
 
-            // <td class="acciones">
-
-            //     <button
-            //         class="btn-warning"
-            //         onclick="abrirModalProducto(
-            //             ${producto.id}
-            //         )">
-
-            //         Editar
-
-            //     </button>
-
-            //     <button
-            //         class="btn-danger"
-            //         onclick="eliminarProducto(
-            //             ${producto.id}
-            //         )">
-
-            //         Eliminar
-
-            //     </button>
-
-            // </td>
-
             <td class="acciones">
+                <button
+                    class="btn-warning"
+                    onclick="abrirModalProducto(
+                        ${producto.id}
+                    )">
+                    Editar
+                </button>
 
-    <button
-        class="btn-warning"
-        onclick="abrirModalMovimiento(${mov.id})">
-
-        Editar
-
-    </button>
-
-    <button
-        class="btn-danger"
-        onclick="eliminarMovimiento(${mov.id})">
-
-        Eliminar
-
-    </button>
-
-</td>
+                <button
+                    class="btn-danger"
+                    onclick="eliminarProducto(
+                        ${producto.id}
+                    )">
+                    Eliminar
+                </button>
+            </td>
 
         </tr>
         `;

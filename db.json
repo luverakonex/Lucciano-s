@@ -1,114 +1,118 @@
 {
   "categorias": [
     {
-      "id": 1,
+      "id": "1",
       "nombre": "Remeras",
       "descripcion": "Remeras básicas, estampadas y oversize"
     },
     {
-      "id": 2,
+      "id": "2",
       "nombre": "Pantalones",
       "descripcion": "Jeans, joggers y pantalones de vestir"
     },
     {
-      "id": 3,
+      "id": "3",
       "nombre": "Camperas",
       "descripcion": "Camperas y rompevientos"
     },
     {
-      "id": 4,
-      "nombre": "Buzos",
-      "descripcion": "Buzos con y sin capucha"
+      "nombre": "Pantalones",
+      "descripcion": "Descripcion",
+      "id": "4"
+    },
+    {
+      "nombre": "calza",
+      "descripcion": "calzas de biker, cortas",
+      "id": "ieTICyz-BYs"
     }
   ],
-
   "productos": [
     {
-      "id": 1,
+      "id": "1",
       "nombre": "Remera Oversize Negra",
       "precio": 18000,
-      "stock": 30,
+      "stock": 26,
       "categoriaId": 1
     },
     {
-      "id": 2,
+      "id": "2",
       "nombre": "Remera Básica Blanca",
       "precio": 15000,
       "stock": 45,
       "categoriaId": 1
     },
     {
-      "id": 3,
+      "id": "3",
       "nombre": "Jean Slim Azul",
       "precio": 42000,
       "stock": 18,
       "categoriaId": 2
     },
     {
-      "id": 4,
+      "id": "4",
       "nombre": "Jogger Cargo Beige",
       "precio": 35000,
       "stock": 12,
       "categoriaId": 2
     },
     {
-      "id": 5,
+      "id": "5",
       "nombre": "Campera Rompeviento",
       "precio": 58000,
       "stock": 8,
       "categoriaId": 3
-    },
-    {
-      "id": 6,
-      "nombre": "Buzo Hoodie Premium",
-      "precio": 39000,
-      "stock": 20,
-      "categoriaId": 4
     }
   ],
-
   "movimientos": [
     {
-      "id": 1,
+      "id": "1",
       "productoId": 1,
       "tipo": "entrada",
       "cantidad": 30,
       "fecha": "2026-06-01"
     },
     {
-      "id": 2,
+      "id": "2",
       "productoId": 2,
       "tipo": "entrada",
       "cantidad": 45,
       "fecha": "2026-06-01"
     },
     {
-      "id": 3,
+      "id": "3",
       "productoId": 3,
       "tipo": "entrada",
       "cantidad": 18,
       "fecha": "2026-06-02"
     },
     {
-      "id": 4,
+      "id": "4",
       "productoId": 4,
       "tipo": "entrada",
       "cantidad": 12,
       "fecha": "2026-06-02"
     },
     {
-      "id": 5,
+      "id": "5",
       "productoId": 5,
       "tipo": "entrada",
       "cantidad": 8,
       "fecha": "2026-06-03"
     },
     {
-      "id": 6,
-      "productoId": 6,
-      "tipo": "entrada",
-      "cantidad": 20,
-      "fecha": "2026-06-03"
+      "productoId": 1,
+      "tipo": "salida",
+      "cantidad": 1,
+      "fecha": "2026-06-24",
+      "id": "6Io1OTcRIU0"
+    },
+    {
+      "productoId": 1,
+      "tipo": "salida",
+      "cantidad": 3,
+      "fecha": "2026-06-24",
+      "id": "iT5ekh2EVpI"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
