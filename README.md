@@ -2,12 +2,12 @@
 Proyecto de programacion web - JavaScript
 ---
 
-# Alumnos participantes del proyecto 
+## Alumnos participantes del proyecto 
 
  🧒🏻 Vera Luciano Walter
  👩🏻 Gonzalez Raflo Luz
  🧒🏻 Moschino Molina Tobias
  👩🏻 Lopez Claudia
  🧒🏻 Marañon Emanuel
- 
+
 ---
