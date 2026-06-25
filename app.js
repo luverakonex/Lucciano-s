@@ -44,6 +44,18 @@ async function cargarDatos() {
     cargarSelectProductos();
 }
 
+function generarIdNumerico(lista) {
+
+    if (!lista.length)
+        return 1;
+
+    return (
+        Math.max(
+            ...lista.map(item => Number(item.id))
+        ) + 1
+    );
+}
+
 /* ==========================================================
     DASHBOARD
 ========================================================== */
@@ -97,12 +109,34 @@ async function obtenerMovimientos() {
     CATEGORÍAS
 ========================================================== */
 
+// async function crearCategoria(nombre, descripcion) {
+
+//     await axios.post(`${API_URL}/categorias`, {
+//         nombre,
+//         descripcion
+//     });
+
+//     await cargarDatos();
+// }
+
 async function crearCategoria(nombre, descripcion) {
 
+    const nuevoId =
+        categorias.length > 0
+            ? Math.max(...categorias.map(c => Number(c.id))) + 1
+            : 1;
+
+    // await axios.post(`${API_URL}/categorias`, {
+    //     id: nuevoId,
+    //     nombre,
+    //     descripcion
+    // });
+
     await axios.post(`${API_URL}/categorias`, {
-        nombre,
-        descripcion
-    });
+    id: generarIdNumerico(categorias),
+    nombre,
+    descripcion
+});
 
     await cargarDatos();
 }
@@ -214,12 +248,35 @@ function renderCategorias() {
     PRODUCTOS
 ========================================================== */
 
+// async function crearProducto(datos) {
+
+//     await axios.post(
+//         `${API_URL}/productos`,
+//         datos
+//     );
+
+//     await cargarDatos();
+// }
+
 async function crearProducto(datos) {
 
-    await axios.post(
-        `${API_URL}/productos`,
-        datos
-    );
+    const nuevoId =
+        productos.length > 0
+            ? Math.max(...productos.map(p => Number(p.id))) + 1
+            : 1;
+
+    // await axios.post(
+    //     `${API_URL}/productos`,
+    //     {
+    //         id: nuevoId,
+    //         ...datos
+    //     }
+    // );
+
+    await axios.post(`${API_URL}/productos`, {
+    id: generarIdNumerico(productos),
+    ...datos
+});
 
     await cargarDatos();
 }

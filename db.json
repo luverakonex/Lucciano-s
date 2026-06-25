@@ -1,117 +1,139 @@
 {
   "categorias": [
     {
-      "id": "1",
+      "id": 1,
       "nombre": "Remeras",
       "descripcion": "Remeras básicas, estampadas y oversize"
     },
     {
-      "id": "2",
+      "id": 2,
       "nombre": "Pantalones",
       "descripcion": "Jeans, joggers y pantalones de vestir"
     },
     {
-      "id": "3",
+      "id": 3,
       "nombre": "Camperas",
       "descripcion": "Camperas y rompevientos"
     },
     {
+      "id": 4,
       "nombre": "Pantalones",
-      "descripcion": "Descripcion",
-      "id": "4"
+      "descripcion": "Descripcion"
     },
     {
-      "nombre": "calza",
-      "descripcion": "calzas de biker, cortas",
-      "id": "ieTICyz-BYs"
+      "id": 5,
+      "nombre": "Gorras",
+      "descripcion": "Nike, Jordan, Lacoste"
+    },
+    {
+      "id": 6,
+      "nombre": "Bufandas",
+      "descripcion": "Bufandas, Chalets"
+    },
+    {
+      "id": 7,
+      "nombre": "Cintos",
+      "descripcion": "Cuero, Ecocuero"
+    },
+    {
+      "id": 8,
+      "nombre": "Sandalias",
+      "descripcion": "Ojotas"
     }
   ],
   "productos": [
     {
-      "id": "1",
+      "id": 1,
       "nombre": "Remera Oversize Negra",
       "precio": 18000,
       "stock": 26,
       "categoriaId": 1
     },
     {
-      "id": "2",
+      "id": 2,
       "nombre": "Remera Básica Blanca",
       "precio": 15000,
       "stock": 45,
       "categoriaId": 1
     },
     {
-      "id": "3",
+      "id": 3,
       "nombre": "Jean Slim Azul",
       "precio": 42000,
       "stock": 18,
       "categoriaId": 2
     },
     {
-      "id": "4",
+      "id": 4,
       "nombre": "Jogger Cargo Beige",
       "precio": 35000,
       "stock": 12,
       "categoriaId": 2
     },
     {
-      "id": "5",
+      "id": 5,
       "nombre": "Campera Rompeviento",
       "precio": 58000,
       "stock": 8,
       "categoriaId": 3
+    },
+    {
+      "id": 6,
+      "nombre": "Ojota Nike",
+      "precio": 15000,
+      "stock": 10,
+      "categoriaId": 8
     }
   ],
   "movimientos": [
     {
-      "id": "1",
+      "id": 1,
       "productoId": 1,
       "tipo": "entrada",
       "cantidad": 30,
       "fecha": "2026-06-01"
     },
     {
-      "id": "2",
+      "id": 2,
       "productoId": 2,
       "tipo": "entrada",
       "cantidad": 45,
       "fecha": "2026-06-01"
     },
     {
-      "id": "3",
+      "id": 3,
       "productoId": 3,
       "tipo": "entrada",
       "cantidad": 18,
       "fecha": "2026-06-02"
     },
     {
-      "id": "4",
+      "id": 4,
       "productoId": 4,
       "tipo": "entrada",
       "cantidad": 12,
       "fecha": "2026-06-02"
     },
     {
-      "id": "5",
+      "id": 5,
       "productoId": 5,
       "tipo": "entrada",
       "cantidad": 8,
       "fecha": "2026-06-03"
     },
     {
+      "id": 6,
       "productoId": 1,
       "tipo": "salida",
       "cantidad": 1,
-      "fecha": "2026-06-24",
-      "id": "6Io1OTcRIU0"
+      "fecha": "2026-06-24"
     },
     {
+      "id": 7,
       "productoId": 1,
       "tipo": "salida",
       "cantidad": 3,
-      "fecha": "2026-06-24",
-      "id": "iT5ekh2EVpI"
+      "fecha": "2026-06-24"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
