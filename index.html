@@ -4,40 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucciano's Inventory Manager</title>
+    <title>Lucciano's Administrador de Inventario</title>
+    <link rel="stylesheet" href="styles.css">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="estilos.css">
-
-    <!-- Axios (OBLIGATORIO SEGÚN CONSIGNA) -->
+    <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
 
-    <!-- =====================================================
-        HEADER
-    ====================================================== -->
+    <!-- HEADER -->
 
     <header class="header">
         <div class="header-container">
-            <h1>Lucciano's Inventory Manager</h1>
-            <p>Sistema de Gestión de Inventario</p>
+            <h1>Lucciano's Administrador de Inventario</h1>
+            <p>Sistema de Gestión</p>
         </div>
     </header>
 
-    <!-- =====================================================
-        CONTENEDOR PRINCIPAL
-    ====================================================== -->
+    <!-- CONTENEDOR PRINCIPAL -->
 
     <main class="container">
 
-        <!-- =====================================================
-            DASHBOARD
-        ====================================================== -->
+        <!-- DASHBOARD -->
 
         <section class="dashboard">
-
+            
             <div class="dashboard-card">
                 <h3 id="totalProductos">0</h3>
                 <p>Productos</p>
@@ -55,9 +47,7 @@
 
         </section>
 
-        <!-- =====================================================
-            CRUD CATEGORÍAS
-        ====================================================== -->
+        <!-- CRUD CATEGORÍAS -->
 
         <section class="card">
 
@@ -108,9 +98,7 @@
 
         </section>
 
-        <!-- =====================================================
-            CRUD PRODUCTOS
-        ====================================================== -->
+        <!-- CRUD PRODUCTOS -->
 
         <section class="card">
 
@@ -152,7 +140,7 @@
 
             </form>
 
-            <!-- FILTRO OBLIGATORIO -->
+            <!-- FILTRO -->
 
             <div class="filtro-container">
 
@@ -194,9 +182,7 @@
 
         </section>
 
-        <!-- =====================================================
-            CRUD MOVIMIENTOS
-        ====================================================== -->
+        <!-- CRUD MOVIMIENTOS -->
 
         <section class="card">
 
@@ -271,9 +257,7 @@
 
         </section>
 
-        <!-- =====================================================
-            HISTORIAL POR PRODUCTO
-        ====================================================== -->
+        <!-- HISTORIAL POR PRODUCTO -->
 
         <section class="card">
 
@@ -301,9 +285,7 @@
 
     </main>
 
-    <!-- =====================================================
-        MODAL EDICIÓN PRODUCTO
-    ====================================================== -->
+    <!-- MODAL EDICIÓN PRODUCTO -->
 
     <div class="modal" id="modalProducto">
 
@@ -353,9 +335,7 @@
 
     </div>
 
-    <!-- =====================================================
-        MODAL EDICIÓN CATEGORÍA
-    ====================================================== -->
+    <!-- MODAL EDICIÓN CATEGORÍA -->
 
     <div class="modal" id="modalCategoria">
 
@@ -403,9 +383,7 @@
 
     </div>
 
-    <!-- =====================================================
-        MODAL EDICIÓN MOVIMIENTO
-    ====================================================== -->
+    <!-- MODAL EDICIÓN MOVIMIENTO -->
 
     <div class="modal" id="modalMovimiento">
 
@@ -455,16 +433,11 @@
 
                         Cancelar
                     </button>
-
                 </div>
-
             </form>
-
         </div>
-
     </div>
 
-    <!-- JS -->
     <script src="app.js"></script>
 
 </body>

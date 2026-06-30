@@ -1,16 +1,12 @@
-/* ==========================================================
-    CONFIGURACIÓN GENERAL
-========================================================== */
+/* CONFIGURACIÓN GENERAL */
 
-const API_URL = "http://localhost:3000";
+const ENDPOINT_BASE = "http://localhost:3000";
 
-let productos = [];
-let categorias = [];
-let movimientos = [];
+let listaProductos = [];
+let listaCategorias = [];
+let historialMovimientos = [];
 
-/* ==========================================================
-    INICIO DE LA APP
-========================================================== */
+/* INICIO DE LA APP */
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -22,28 +18,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     inicializarEventos();
 });
 
-/* ==========================================================
-    CARGA GENERAL
-========================================================== */
+/* CARGA GENERAL */
 
 async function cargarDatos() {
 
-    await Promise.all([
-        obtenerCategorias(),
-        obtenerProductos(),
-        obtenerMovimientos()
-    ]);
+    try {
 
-    actualizarDashboard();
+        await Promise.all([
+            obtenerCategorias(),
+            obtenerProductos(),
+            obtenerMovimientos()
+        ]);
 
-    renderCategorias();
-    renderProductos();
-    renderMovimientos();
+        actualizarDashboard();
 
-    cargarSelectCategorias();
-    cargarSelectProductos();
+        renderCategorias();
+        renderProductos();
+        renderMovimientos();
+
+        cargarSelectCategorias();
+        cargarSelectProductos();
+
+    } catch (error) {
+
+        console.error("Error al cargar los datos:", error);
+
+        alert("No fue posible conectar con el servidor.");
+
+    }
+
 }
-
 function generarIdNumerico(lista) {
 
     if (!lista.length)
@@ -56,19 +60,17 @@ function generarIdNumerico(lista) {
     );
 }
 
-/* ==========================================================
-    DASHBOARD
-========================================================== */
+/* DASHBOARD */
 
 function actualizarDashboard() {
 
     document.getElementById("totalProductos").textContent =
-        productos.length;
+        listaProductos.length;
 
     document.getElementById("totalCategorias").textContent =
-        categorias.length;
+        listaCategorias.length;
 
-    const stockTotal = productos.reduce(
+    const stockTotal = listaProductos.reduce(
         (acum, p) => acum + Number(p.stock),
         0
     );
@@ -77,63 +79,50 @@ function actualizarDashboard() {
         stockTotal;
 }
 
-/* ==========================================================
-    PETICIONES API
-========================================================== */
+/* PETICIONES API */
 
 async function obtenerCategorias() {
 
     const response =
-        await axios.get(`${API_URL}/categorias`);
+        await axios.get(`${ENDPOINT_BASE}/categorias`);
 
-    categorias = response.data;
+    listaCategorias = response.data;
 }
 
 async function obtenerProductos() {
 
     const response =
-        await axios.get(`${API_URL}/productos`);
+        await axios.get(`${ENDPOINT_BASE}/productos`);
 
-    productos = response.data;
+    listaProductos = response.data;
 }
 
 async function obtenerMovimientos() {
 
     const response =
-        await axios.get(`${API_URL}/movimientos`);
+        await axios.get(`${ENDPOINT_BASE}/movimientos`);
 
-    movimientos = response.data;
+    historialMovimientos = response.data;
 }
 
-/* ==========================================================
-    CATEGORÍAS
-========================================================== */
+/* CATEGORÍAS */
 
-// async function crearCategoria(nombre, descripcion) {
-
-//     await axios.post(`${API_URL}/categorias`, {
-//         nombre,
-//         descripcion
-//     });
-
-//     await cargarDatos();
-// }
 
 async function crearCategoria(nombre, descripcion) {
 
     const nuevoId =
-        categorias.length > 0
-            ? Math.max(...categorias.map(c => Number(c.id))) + 1
+        listaCategorias.length > 0
+            ? Math.max(...listaCategorias.map(c => Number(c.id))) + 1
             : 1;
 
-    // await axios.post(`${API_URL}/categorias`, {
+    // await axios.post(`${ENDPOINT_BASE}/categorias`, {
     //     id: nuevoId,
     //     nombre,
     //     descripcion
     // });
 
-    await axios.post(`${API_URL}/categorias`, {
-    id: generarIdNumerico(categorias),
+    await axios.post(`${ENDPOINT_BASE}/categorias`, {
+    id: generarIdNumerico(listaCategorias),
     nombre,
     descripcion
 });
@@ -144,7 +133,7 @@ async function crearCategoria(nombre, descripcion) {
 async function eliminarCategoria(id) {
 
     const productosRelacionados =
-        productos.filter(
+        listaProductos.filter(
             p => Number(p.categoriaId) === Number(id)
         );
 
@@ -159,19 +148,19 @@ async function eliminarCategoria(id) {
         for (const producto of productosRelacionados) {
 
             const movimientosRelacionados =
-                movimientos.filter(
+                historialMovimientos.filter(
                     m => Number(m.productoId) === Number(producto.id)
                 );
 
             for (const mov of movimientosRelacionados) {
 
                 await axios.delete(
-                    `${API_URL}/movimientos/${mov.id}`
+                    `${ENDPOINT_BASE}/movimientos/${mov.id}`
                 );
             }
 
             await axios.delete(
-                `${API_URL}/productos/${producto.id}`
+                `${ENDPOINT_BASE}/productos/${producto.id}`
             );
         }
 
@@ -181,7 +170,7 @@ async function eliminarCategoria(id) {
             return;
     }
 
-    await axios.delete(`${API_URL}/categorias/${id}`);
+    await axios.delete(`${ENDPOINT_BASE}/categorias/${id}`);
 
     await cargarDatos();
 }
@@ -189,7 +178,7 @@ async function eliminarCategoria(id) {
 async function editarCategoria(id, nombre, descripcion) {
 
     await axios.patch(
-        `${API_URL}/categorias/${id}`,
+        `${ENDPOINT_BASE}/categorias/${id}`,
         {
             nombre,
             descripcion
@@ -208,7 +197,7 @@ function renderCategorias() {
 
     tbody.innerHTML = "";
 
-    categorias.forEach(categoria => {
+    listaCategorias.forEach(categoria => {
 
         tbody.innerHTML += `
         <tr>
@@ -244,42 +233,18 @@ function renderCategorias() {
     });
 }
 
-/* ==========================================================
-    PRODUCTOS
-========================================================== */
-
-// async function crearProducto(datos) {
-
-//     await axios.post(
-//         `${API_URL}/productos`,
-//         datos
-//     );
-
-//     await cargarDatos();
-// }
+/* PRODUCTOS */
 
 async function crearProducto(datos) {
 
-    const nuevoId =
-        productos.length > 0
-            ? Math.max(...productos.map(p => Number(p.id))) + 1
-            : 1;
+     await axios.post(
+         `${ENDPOINT_BASE}/productos`,
+         datos
+     );
 
-    // await axios.post(
-    //     `${API_URL}/productos`,
-    //     {
-    //         id: nuevoId,
-    //         ...datos
-    //     }
-    // );
+     await cargarDatos();
+ }
 
-    await axios.post(`${API_URL}/productos`, {
-    id: generarIdNumerico(productos),
-    ...datos
-});
-
-    await cargarDatos();
-}
 
 async function eliminarProducto(id) {
 
@@ -287,19 +252,19 @@ async function eliminarProducto(id) {
         return;
 
     const relacionados =
-        movimientos.filter(
+        historialMovimientos.filter(
             m => Number(m.productoId) === Number(id)
         );
 
     for (const mov of relacionados) {
 
         await axios.delete(
-            `${API_URL}/movimientos/${mov.id}`
+            `${ENDPOINT_BASE}/movimientos/${mov.id}`
         );
     }
 
     await axios.delete(
-        `${API_URL}/productos/${id}`
+        `${ENDPOINT_BASE}/productos/${id}`
     );
 
     await cargarDatos();
@@ -308,7 +273,7 @@ async function eliminarProducto(id) {
 async function editarProducto(id, datos) {
 
     await axios.patch(
-        `${API_URL}/productos/${id}`,
+        `${ENDPOINT_BASE}/productos/${id}`,
         datos
     );
 
@@ -317,7 +282,7 @@ async function editarProducto(id, datos) {
     await cargarDatos();
 }
 
-function renderProductos(lista = productos) {
+function renderProductos(lista = listaProductos) {
 
     const tbody =
         document.getElementById("tablaProductos");
@@ -327,7 +292,7 @@ function renderProductos(lista = productos) {
     lista.forEach(producto => {
 
         const categoria =
-            categorias.find(
+            listaCategorias.find(
                 c =>
                 Number(c.id) ===
                 Number(producto.categoriaId)
@@ -398,14 +363,12 @@ function renderProductos(lista = productos) {
     });
 }
 
-/* ==========================================================
-    MOVIMIENTOS
-========================================================== */
+/* MOVIMIENTOS */
 
 async function crearMovimiento(datos) {
 
     const producto =
-        productos.find(
+        listaProductos.find(
             p =>
             Number(p.id) ===
             Number(datos.productoId)
@@ -429,12 +392,12 @@ async function crearMovimiento(datos) {
     }
 
     await axios.post(
-        `${API_URL}/movimientos`,
+        `${ENDPOINT_BASE}/movimientos`,
         datos
     );
 
     await axios.patch(
-        `${API_URL}/productos/${producto.id}`,
+        `${ENDPOINT_BASE}/productos/${producto.id}`,
         {
             stock: nuevoStock
         }
@@ -446,7 +409,7 @@ async function crearMovimiento(datos) {
 async function eliminarMovimiento(id) {
 
     const movimiento =
-        movimientos.find(
+        historialMovimientos.find(
             m => Number(m.id) === Number(id)
         );
 
@@ -454,7 +417,7 @@ async function eliminarMovimiento(id) {
         return;
 
     const producto =
-        productos.find(
+        listaProductos.find(
             p =>
             Number(p.id) ===
             Number(movimiento.productoId)
@@ -468,14 +431,14 @@ async function eliminarMovimiento(id) {
         stockCorregido += movimiento.cantidad;
 
     await axios.patch(
-        `${API_URL}/productos/${producto.id}`,
+        `${ENDPOINT_BASE}/productos/${producto.id}`,
         {
             stock: stockCorregido
         }
     );
 
     await axios.delete(
-        `${API_URL}/movimientos/${id}`
+        `${ENDPOINT_BASE}/movimientos/${id}`
     );
 
     await cargarDatos();
@@ -488,10 +451,10 @@ function renderMovimientos() {
 
     tbody.innerHTML = "";
 
-    movimientos.forEach(mov => {
+    historialMovimientos.forEach(mov => {
 
         const producto =
-            productos.find(
+            listaProductos.find(
                 p =>
                 Number(p.id) ===
                 Number(mov.productoId)
@@ -531,9 +494,7 @@ function renderMovimientos() {
     });
 }
 
-/* ==========================================================
-    HISTORIAL
-========================================================== */
+/* HISTORIAL */
 
 function mostrarHistorial(productoId) {
 
@@ -543,7 +504,7 @@ function mostrarHistorial(productoId) {
         );
 
     const historial =
-        movimientos.filter(
+        historialMovimientos.filter(
             m =>
             Number(m.productoId) ===
             Number(productoId)
@@ -567,9 +528,7 @@ function mostrarHistorial(productoId) {
         `).join("");
 }
 
-/* ==========================================================
-    SELECTS
-========================================================== */
+/* SELECTS */
 
 function cargarSelectCategorias() {
 
@@ -600,7 +559,7 @@ function cargarSelectCategorias() {
             select.innerHTML =
                 '<option value="">Todas las categorías</option>';
 
-        categorias.forEach(cat => {
+        listaCategorias.forEach(cat => {
 
             select.innerHTML += `
             <option value="${cat.id}">
@@ -632,7 +591,7 @@ function cargarSelectProductos() {
         select.innerHTML =
             '<option value="">Seleccione un producto</option>';
 
-        productos.forEach(producto => {
+        listaProductos.forEach(producto => {
 
             select.innerHTML += `
             <option value="${producto.id}">
@@ -643,9 +602,7 @@ function cargarSelectProductos() {
     });
 }
 
-/* ==========================================================
-    EVENTOS
-========================================================== */
+/* EVENTOS */
 
 function inicializarEventos() {
 
@@ -745,7 +702,7 @@ function inicializarEventos() {
 
                 renderProductos(
 
-                    productos.filter(
+                    listaProductos.filter(
                         p =>
                         Number(
                             p.categoriaId
@@ -796,14 +753,12 @@ function inicializarEventos() {
 );
 }
 
-/* ==========================================================
-    MODALES
-========================================================== */
+/* MODALES */
 
 function abrirModalProducto(id) {
 
     const producto =
-        productos.find(
+        listaProductos.find(
             p => p.id == id
         );
 
@@ -829,7 +784,7 @@ function cerrarModalProducto() {
 function abrirModalCategoria(id) {
 
     const categoria =
-        categorias.find(
+        listaCategorias.find(
             c => c.id == id
         );
 
@@ -848,7 +803,7 @@ function abrirModalCategoria(id) {
 function abrirModalMovimiento(id) {
 
     const movimiento =
-        movimientos.find(
+        historialMovimientos.find(
             m => Number(m.id) === Number(id)
         );
 
@@ -903,7 +858,7 @@ async function editarMovimiento(
 ) {
 
     const movimiento =
-        movimientos.find(
+        historialMovimientos.find(
             m =>
             Number(m.id) ===
             Number(movimientoId)
@@ -913,7 +868,7 @@ async function editarMovimiento(
         return;
 
     const producto =
-        productos.find(
+        listaProductos.find(
             p =>
             Number(p.id) ===
             Number(movimiento.productoId)
@@ -925,29 +880,21 @@ async function editarMovimiento(
     let stockActual =
         producto.stock;
 
-    /*
-        PASO 1
-        Revertimos movimiento viejo
-    */
+    /* PASO 1 : Revertimos movimiento viejo */
 
     if (movimiento.tipo === "entrada")
         stockActual -= movimiento.cantidad;
     else
         stockActual += movimiento.cantidad;
 
-    /*
-        PASO 2
-        Aplicamos movimiento nuevo
-    */
+    /* PASO 2 : Aplicamos movimiento nuevo */
 
     if (nuevoTipo === "entrada")
         stockActual += nuevaCantidad;
     else
         stockActual -= nuevaCantidad;
 
-    /*
-        Validación
-    */
+    /* Validación */
 
     if (stockActual < 0) {
 
@@ -958,23 +905,19 @@ async function editarMovimiento(
         return;
     }
 
-    /*
-        Actualizar stock
-    */
+    /* Actualizar stock */
 
     await axios.patch(
-        `${API_URL}/productos/${producto.id}`,
+        `${ENDPOINT_BASE}/productos/${producto.id}`,
         {
             stock: stockActual
         }
     );
 
-    /*
-        Actualizar movimiento
-    */
+    /* Actualizar movimiento */
 
     await axios.patch(
-        `${API_URL}/movimientos/${movimientoId}`,
+        `${ENDPOINT_BASE}/movimientos/${movimientoId}`,
         {
             tipo: nuevoTipo,
             cantidad: nuevaCantidad

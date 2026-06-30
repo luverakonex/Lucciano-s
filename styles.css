@@ -1,29 +1,25 @@
-/* =====================================================
-   VARIABLES GLOBALES
-===================================================== */
+/* VARIABLES GLOBALES */
 
 :root {
 
-    --color-50: #F8F3ED;
-    --color-100: #EADDCC;
-    --color-200: #DDC7AC;
-    --color-300: #D0B18B;
-    --color-400: #C29B6B;
-    --color-500: #BA8D56;
-    --color-600: #946D3D;
-    --color-700: #74552F;
-    --color-800: #533D22;
-    --color-900: #332515;
-    --color-950: #120D07;
+    --blanco1: #F8F3ED;
+    --blanco2: #EADDCC;
+    --gris: #DDC7AC;
+    --gris2: #D0B18B;
+    --crema: #C29B6B;
+    --crema2: #BA8D56;
+    --marron: #946D3D;
+    --marron2: #74552F;
+    --marron3: #533D22;
+    --marron4: #332515;
+    --marron5: #120D07;
 
     --shadow: 0 10px 30px rgba(0,0,0,.15);
     --radius: 14px;
     --transition: .25s ease;
 }
 
-/* =====================================================
-   RESET
-===================================================== */
+/* RESET */
 
 * {
     margin: 0;
@@ -33,20 +29,18 @@
 
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--color-50);
-    color: var(--color-900);
+    background: var(--blanco1);
+    color: var(--marron5);
     min-height: 100vh;
 }
 
-/* =====================================================
-   HEADER
-===================================================== */
+/* HEADER */
 
 .header {
     background: linear-gradient(
         135deg,
-        var(--color-900),
-        var(--color-800)
+        var(--marron4),
+        var(--marron3)
     );
 
     color: white;
@@ -67,12 +61,10 @@ body {
 }
 
 .header p {
-    color: var(--color-200);
+    color: var(--marron2);
 }
 
-/* =====================================================
-   CONTENEDOR PRINCIPAL
-===================================================== */
+/* CONTENEDOR PRINCIPAL */
 
 .container {
     max-width: 1400px;
@@ -80,9 +72,7 @@ body {
     padding: 30px;
 }
 
-/* =====================================================
-   DASHBOARD
-===================================================== */
+/* DASHBOARD */
 
 .dashboard {
 
@@ -108,22 +98,20 @@ body {
 
     box-shadow: var(--shadow);
 
-    border-left: 6px solid var(--color-500);
+    border-left: 6px solid var(--crema2);
 }
 
 .dashboard-card h3 {
     font-size: 2rem;
-    color: var(--color-700);
+    color: var(--marron2);
 }
 
 .dashboard-card p {
     margin-top: 10px;
-    color: var(--color-600);
+    color: var(--marron1);
 }
 
-/* =====================================================
-   TARJETAS DE SECCIÓN
-===================================================== */
+/* TARJETAS DE SECCIÓN */
 
 .card {
 
@@ -143,12 +131,10 @@ body {
 }
 
 .section-header h2 {
-    color: var(--color-800);
+    color: var(--marron3);
 }
 
-/* =====================================================
-   FORMULARIOS
-===================================================== */
+/* FORMULARIOS */
 
 .form-grid {
 
@@ -172,7 +158,7 @@ textarea {
 
     border-radius: 10px;
 
-    border: 1px solid var(--color-200);
+    border: 1px solid var(--marron2);
 
     font-size: 15px;
 
@@ -185,7 +171,7 @@ textarea:focus {
 
     outline: none;
 
-    border-color: var(--color-500);
+    border-color: var(--crema2);
 
     box-shadow: 0 0 0 3px rgba(186,141,86,.2);
 }
@@ -195,13 +181,11 @@ textarea {
     min-height: 100px;
 }
 
-/* =====================================================
-   BOTONES
-===================================================== */
+/* BOTONES */
 
 .btn-primary {
 
-    background: var(--color-600);
+    background: var(--marron2);
 
     color: white;
 
@@ -216,7 +200,7 @@ textarea {
 
 .btn-primary:hover {
 
-    background: var(--color-700);
+    background: var(--marron2);
 
     transform: translateY(-2px);
 }
@@ -273,9 +257,7 @@ textarea {
     opacity: .9;
 }
 
-/* =====================================================
-   TABLAS
-===================================================== */
+/* TABLAS */
 
 .table-container {
     overflow-x: auto;
@@ -290,7 +272,7 @@ table {
 
 thead {
 
-    background: var(--color-800);
+    background: var(--marron3);
 
     color: white;
 }
@@ -302,24 +284,20 @@ td {
 
     text-align: left;
 
-    border-bottom: 1px solid var(--color-100);
+    border-bottom: 1px solid var(--marron2);
 }
 
 tbody tr:hover {
-    background: var(--color-50);
+    background: var(--marron1);
 }
 
-/* =====================================================
-   FILTROS
-===================================================== */
+/* FILTROS */
 
 .filtro-container {
     margin-bottom: 20px;
 }
 
-/* =====================================================
-   BADGES DE ESTADO
-===================================================== */
+/* BADGES DE ESTADO */
 
 .estado {
 
@@ -350,21 +328,19 @@ tbody tr:hover {
     color: #991b1b;
 }
 
-/* =====================================================
-   HISTORIAL
-===================================================== */
+/* HISTORIAL */
 
 .historial-container {
 
     margin-top: 20px;
 
-    border: 1px solid var(--color-200);
+    border: 1px solid var(--marron2);
 
     border-radius: var(--radius);
 
     padding: 20px;
 
-    background: var(--color-50);
+    background: var(--marron1);
 }
 
 .historial-item {
@@ -375,21 +351,19 @@ tbody tr:hover {
 
     background: white;
 
-    border-left: 5px solid var(--color-500);
+    border-left: 5px solid var(--crema2);
 
     border-radius: 8px;
 }
 
 .empty-message {
 
-    color: var(--color-600);
+    color: var(--marron2);
 
     text-align: center;
 }
 
-/* =====================================================
-   MODALES
-===================================================== */
+/* MODALES */
 
 .modal {
 
@@ -441,9 +415,7 @@ tbody tr:hover {
     margin-top: 20px;
 }
 
-/* =====================================================
-   ACCIONES TABLAS
-===================================================== */
+/* ACCIONES TABLAS */
 
 .acciones {
 
@@ -454,26 +426,22 @@ tbody tr:hover {
     flex-wrap: wrap;
 }
 
-/* =====================================================
-   SCROLLBAR
-===================================================== */
+/* SCROLLBAR */
 
 ::-webkit-scrollbar {
     width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--color-100);
+    background: var(--marron1);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-500);
+    background: var(--marron2);
     border-radius: 20px;
 }
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
+/* RESPONSIVE */
 
 @media (max-width: 768px) {
 
